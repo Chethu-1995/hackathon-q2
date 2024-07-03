@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "yourdockerhubusername/sample-app"
+        DOCKER_IMAGE = "chethangowdahm/hackathon-q2"
         DOCKERHUB_CRED_ID = 'dockerhub'   // Jenkins credential ID for Docker Hub
         GCHAT_WEBHOOK_URL = 'https://chat.googleapis.com/v1/spaces/AAAAwbJjrTU/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=R8QFL-w4HSOZazKLeNmFcujYh3lNQPRm8f5C7Z7PVRI' // Google Chat webhook URL
     }
