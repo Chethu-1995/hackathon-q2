@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/YOUR_USERNAME/sample-app.git'
+                git 'https://github.com/Chethu-1995/hackathon-q2.git'
             }
         }
 
