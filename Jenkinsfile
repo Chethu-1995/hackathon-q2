@@ -4,6 +4,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = "chethangowdahm/hackathon-q2"
         DOCKERHUB_CRED_ID = 'dockerhub'   // Jenkins credential ID for Docker Hub
+        K8S_CRED_ID = 'k8s-token' // Jenkins credential ID for Kubernetes
         GCHAT_WEBHOOK_URL = 'https://chat.googleapis.com/v1/spaces/AAAAvJhslpE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=XORFOGjWMMWYge0exFNYZEcdEEFopo-cR6PiLBnLJ-w' // Google Chat webhook URL
     }
 
@@ -36,11 +37,13 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    sh """
-                    kubectl apply -f k8s-deployment.yml
-                    kubectl set image deployment/sample-app sample-app=${DOCKER_IMAGE}:${env.BUILD_ID}
-                    kubectl rollout status deployment/sample-app
-                    """
+                    withCredentials([string(credentialsId: K8S_CRED_ID, variable: 'K8S_TOKEN')]) {
+                        sh """
+                        kubectl apply -f k8s-deployment.yml
+                        kubectl set image deployment/sample-app sample-app=${DOCKER_IMAGE}:${env.BUILD_ID}
+                        kubectl rollout status deployment/sample-app
+                        """
+                    }
                 }
             }
         }
